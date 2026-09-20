@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="JollyBee Beauty — thoughtful skincare, makeup, haircare, and fragrance.">
+  <title>{% block title %}JollyBee Beauty{% endblock %}</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head><body>
+  <div class="announcement">Free shipping on orders over $60 · Clean formulas · Cruelty-free</div>
+  <header class="site-header"><a class="brand" href="{{ url_for('shop.home') }}">JollyBee</a>
+    <nav aria-label="Main navigation"><a href="{{ url_for('shop.shop') }}">Shop</a><a href="{{ url_for('shop.shop', category='Skincare') }}">Skincare</a><a href="{{ url_for('shop.shop', category='Makeup') }}">Makeup</a></nav>
+    <div class="nav-actions">
+      {% if current_user.is_authenticated %}<a href="{{ url_for('shop.orders') }}">Orders</a><form method="post" action="{{ url_for('shop.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-btn">Sign out</button></form>{% else %}<a href="{{ url_for('shop.login') }}">Sign in</a>{% endif %}
+      <a class="bag" href="{{ url_for('shop.cart') }}">Bag <span>{{ cart_count }}</span></a>
+    </div>
+  </header>
+  {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-wrap">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}
+  <main>{% block content %}{% endblock %}</main>
+  <footer><div><div class="brand">JollyBee</div><p>Everyday beauty, thoughtfully made.</p></div><div><strong>Customer care</strong><a href="mailto:hello@example.com">Contact</a><a href="#">Shipping & returns</a></div><div><strong>Follow</strong><a href="#">Instagram</a><a href="#">TikTok</a></div><small>© 2026 JollyBee Beauty. Demo storefront.</small></footer>
+</body></html>

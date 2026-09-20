@@ -1,0 +1,4 @@
+{% extends 'base.html' %}{% block title %}Shop — JollyBee{% endblock %}{% block content %}
+<section class="shop-head"><span class="eyebrow">THE COLLECTION</span><h1>Find your new favorite.</h1><form class="filters" method="get"><input type="search" name="q" value="{{ q }}" placeholder="Search products" aria-label="Search products"><select name="category" aria-label="Filter by category"><option value="">All categories</option>{% for item in categories %}<option {% if category==item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select><button class="button dark">Apply</button></form></section>
+<section class="section"><p class="results">{{ products|length }} products</p><div class="product-grid">{% for product in products %}{% include '_card.html' %}{% else %}<div class="empty"><h2>No matches yet</h2><p>Try a different search or browse the full collection.</p></div>{% endfor %}</div></section>
+{% endblock %}
